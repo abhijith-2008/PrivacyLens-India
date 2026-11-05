@@ -7,10 +7,7 @@ Privacy policies are often long, legally dense, and filled with technical jargon
 ---
 
 ## ⚠️ Disclaimer
-**PrivacyLens India is an educational prototype, not a legal compliance checker.** 
-* It does not provide legal advice and is not a substitute for reading the original policy or seeking professional counsel.
-* The machine learning models and text-matching rules may yield incomplete or incorrect predictions. 
-* A detected phrase is not proof of legal compliance, and a missing match is not proof of non-compliance.
+**PrivacyLens India is an educational prototype designed to assist with reviewing privacy policies, but it is not a legal compliance tool or a substitute for professional legal counsel.** Please note that the automated text analysis and machine learning predictions are experimental and may not capture all legal nuances perfectly. A highlighted phrase does not guarantee compliance, and users should always refer to the original policy text for final verification.
 
 ---
 
