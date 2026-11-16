@@ -117,7 +117,7 @@ if analyze:
                     st.markdown(f"- {limitation}")
 
                 st.warning(checklist_result["disclaimer"])
-                st.write(checklist_result["commencement_note"])
+                
 
         except Exception as exc:
             st.error(
