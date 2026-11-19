@@ -24,43 +24,52 @@ CHECKLIST = [
             "Look for a notice explaining the personal data involved "
             "and relevant information given to the Data Principal."
         ),
-       "terms": [
-            # Descriptions of the privacy policy or notice
+      
+        "terms": [
+            # Explicit privacy policy or notice descriptions
             "this privacy policy explains",
             "this privacy policy describes",
             "this privacy notice explains",
             "this privacy notice describes",
             "this notice explains",
             "this notice describes",
-            "this policy describes",
-            "this policy explains",
             "this privacy statement outlines",
             "this privacy statement describes",
             "this privacy statement explains",
-            "this statement outlines",
-            "this privacy policy describes the policies and procedures",
-            "collection, use, disclosure and protection of your information",
-            "please read this policy before using",
-            # Information and personal data covered
+
+            # Specific notice language identified in the Eternal/Zomato policy
+            "types of information that eternal may collect from you",
+            "practices for collecting, using, maintaining, protecting and disclosing",
+            "this privacy policy outlines eternal and its affiliates",
+            "processing of personal information concerning individuals",
+            "information we collect and how we use it",
+            "information you provide to us",
+            "information we collect through automatic data collection technologies",
+            "information from third parties",
+
+            # Personal data and collection information
             "personal data we collect",
             "personal information we collect",
             "what personal data we collect",
             "categories of personal data we collect",
-            "information about the personal data",
             "information we collect from you",
-            "personal data does paytm collect",
+            "details of personal data collected",
 
-            # Collection and processing explanations
+            # How personal data is processed
             "how we collect and use your personal data",
             "how we use your personal data",
             "how we process your personal data",
+            "how we collect and process your personal information",
             "outlines how paytm collects",
             "how paytm collects, uses, shares",
-            "details of personal data collected",
-            "information provided to you",
+
+            # Notice-specific language
             "notice to the data principal",
             "notice to data principals",
+            "collection, use, disclosure and protection of your information",
+            "please read this policy before using",
         ],
+
         "exclude_terms": [
             # References to unrelated or separate notices
             "read the phonepe ai connectors privacy notice",
