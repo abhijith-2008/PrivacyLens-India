@@ -56,6 +56,12 @@ if analyze:
                 st.write("No summary sentences could be extracted.")
 
             st.header("2. Privacy-practice findings")
+            st.caption(
+                "ML-assisted predictions based on OPP-115 privacy-practice "
+                "categories. These are not DPDP compliance classifications. "
+                "Only predictions meeting the configured model threshold are "
+                "shown as findings."
+            )
 
             if report["findings"]:
                 for finding in report["findings"]:
