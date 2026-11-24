@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrivacyLens India</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <span class="logo-icon">🛡️</span>
+            <h1>PrivacyLens <span>India</span></h1>
+        </div>
+        <p class="tagline">Understand your privacy before you agree.</p>
+    </header>
+
+    <!-- Website information -->
+    <section class="website-card">
+        <p class="section-label">CURRENT WEBSITE</p>
+        <h2 id="websiteName">Waiting for website...</h2>
+        <p id="websiteUrl">Open a website to get started.</p>
+    </section>
+
+    <!-- Status -->
+    <section class="status-card">
+        <div class="status-indicator" id="statusIndicator"></div>
+        <p id="statusText">Ready to scan</p>
+    </section>
+
+    <!-- Policy detection -->
+    <section class="action-section">
+
+        <button id="detectBtn" class="primary-button">
+            Detect Privacy Policy
+        </button>
+
+        <div id="policyInfo" class="hidden">
+
+            <p class="success-message">
+                Privacy policy detected!
+            </p>
+
+            <p id="policyUrl" class="policy-url"></p>
+
+            <button id="analyzeBtn" class="primary-button">
+                Open Privacy Policy
+            </button>
+
+            <button id="extractBtn" class="primary-button hidden">
+                Extract Policy Text
+            </button>
+
+            <!-- Extracted policy -->
+            <div id="extractedSection" class="result-card hidden">
+
+                <h3>Policy Text Ready</h3>
+
+                <p id="extractedLength"></p>
+
+                <pre id="extractedText"></pre>
+
+                <button id="runAnalysisBtn" class="primary-button">
+                    Analyse with PrivacyLens AI
+                </button>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy Nutrition Label -->
+    <section id="nutritionLabel" class="nutrition-section hidden">
+
+        <div class="nutrition-heading">
+            <div>
+                <p class="section-label">PRIVACY NUTRITION LABEL</p>
+                <h2 id="labelWebsiteName">Website</h2>
+            </div>
+
+            <span class="analysis-badge">Analysed</span>
+        </div>
+
+        <p id="policyUpdated" class="policy-updated"></p>
+
+        <div class="overview-card">
+            <h3>What you should know</h3>
+            <p class="overview-subtitle">
+                Important practices mentioned in this privacy policy.
+            </p>
+
+            <div id="nutritionItems" class="nutrition-items">
+                No information available yet.
+            </div>
+        </div>
+
+        <!-- Important findings -->
+        <div class="overview-card">
+            <h3>Important things to consider</h3>
+            <div id="importantConsiderations"></div>
+        </div>
+
+        <!-- User decision -->
+        <div class="decision-card">
+
+            <h3>Your decision</h3>
+
+            <p>
+                Review the information and decide how you want to proceed.
+                PrivacyLens will not make this decision for you.
+            </p>
+
+            <button id="continueBtn" class="primary-button">
+                Continue to website
+            </button>
+
+            <button id="reviewDetailsBtn" class="secondary-button">
+                Review privacy details
+            </button>
+
+            <button id="goBackBtn" class="back-button">
+                Go back
+            </button>
+
+            <p class="decision-note">
+                Continuing does not automatically mean you have accepted
+                the website's terms or consented to its data practices.
+            </p>
+
+        </div>
+
+    </section>
+
+    <!-- Detailed analysis -->
+    <section id="results" class="results hidden">
+
+        <div class="details-heading">
+            <h2>Detailed Privacy Analysis</h2>
+            <p>Explore the policy evidence behind the overview.</p>
+        </div>
+
+        <div class="result-card">
+            <h3>Policy Summary</h3>
+            <div id="summaryContent">
+                No summary available yet.
+            </div>
+        </div>
+
+        <div class="result-card">
+            <h3>Privacy Findings — OPP-115</h3>
+            <div id="findingsContent">
+                No findings available yet.
+            </div>
+        </div>
+
+        <div class="result-card">
+            <h3>DPDP Awareness Checklist</h3>
+            <div id="checklistContent">
+                No checklist available yet.
+            </div>
+        </div>
+
+        <p class="disclaimer">
+            These results are automated policy-text analysis.
+            They do not verify actual website behaviour or establish
+            legal compliance.
+        </p>
+
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>PrivacyLens India · AI-assisted privacy awareness</p>
+        <p>Informational purposes only. Not legal advice.</p>
+    </footer>
+
+</div>
+
+<script src="popup.js"></script>
+
+</body>
+</html>

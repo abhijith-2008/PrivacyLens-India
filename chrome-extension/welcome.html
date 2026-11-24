@@ -1,0 +1,407 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PrivacyLens India | Privacy Intelligence</title>
+    <link rel="stylesheet" href="workspace.css">
+</head>
+
+<body>
+
+<div class="app-shell">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">🛡</div>
+            <div>
+                <h1>PrivacyLens</h1>
+                <span>INDIA</span>
+            </div>
+        </div>
+
+        <div class="sidebar-label">WORKSPACE</div>
+
+        <nav class="sidebar-nav">
+            <a href="#overview" class="nav-item active">
+                <span>◈</span> Overview
+            </a>
+
+            <a href="#nutritionLabel" class="nav-item">
+                <span>▤</span> Nutrition Label
+            </a>
+
+            <a href="#results" class="nav-item">
+                <span>⌕</span> AI Findings
+            </a>
+
+            <a href="#dpdp-section" class="nav-item">
+                <span>✓</span> DPDP Checklist
+            </a>
+
+            <a href="#evidence-section" class="nav-item">
+                <span>⌗</span> Evidence Explorer
+            </a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <div class="sidebar-label">CURRENT WEBSITE</div>
+
+            <div class="sidebar-website">
+                <div class="website-avatar">W</div>
+                <div class="sidebar-website-info">
+                    <strong id="sidebarWebsiteName">Loading...</strong>
+                    <span>Privacy analysis</span>
+                </div>
+            </div>
+
+            <div class="sidebar-footer">
+                <span class="online-dot"></span>
+                PrivacyLens AI Workspace
+            </div>
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <header class="topbar">
+
+            <div>
+                <p class="topbar-eyebrow">PRIVACY INTELLIGENCE PLATFORM</p>
+                <h2>Analysis Workspace</h2>
+                <p class="topbar-subtitle">
+                    Understand how websites handle your personal information.
+                </p>
+            </div>
+
+            <div class="topbar-status">
+                <span class="online-dot"></span>
+                <span>Workspace active</span>
+            </div>
+
+        </header>
+
+
+        <!-- OVERVIEW -->
+        <section id="overview" class="dashboard-section">
+
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">01 / WEBSITE OVERVIEW</span>
+                    <h2>Privacy overview</h2>
+                    <p>Your detected website and privacy policy information.</p>
+                </div>
+
+                <span class="status-badge detected">
+                    <span class="badge-dot"></span>
+                    Policy detected
+                </span>
+            </div>
+
+
+            <!-- WEBSITE CARD -->
+            <div class="website-overview-card">
+
+                <div class="website-overview-main">
+
+                    <div class="website-symbol">🌐</div>
+
+                    <div class="website-identity">
+                        <span class="card-label">ANALYSING WEBSITE</span>
+                        <h3 id="websiteName">Loading website...</h3>
+                        <p id="websiteUrl">Loading website information...</p>
+                    </div>
+
+                </div>
+
+                <div class="website-policy-info" id="policyInfo">
+
+                    <div class="policy-divider"></div>
+
+                    <div>
+                        <span class="card-label">DETECTED PRIVACY POLICY</span>
+                        <p id="policyUrl" class="policy-url"></p>
+
+                        <a id="policyLink" href="#" target="_blank" rel="noopener noreferrer">
+                            View original policy ↗
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ANALYSIS STATUS -->
+            <div class="status-panel">
+
+                <div class="status-left">
+                    <span class="status-indicator" id="statusIndicator"></span>
+                    <p id="statusText">Ready to extract policy.</p>
+                </div>
+
+                <span class="status-panel-label">PRIVACYLENS AI</span>
+
+            </div>
+
+
+            <!-- EXTRACTION -->
+            <div class="extraction-card">
+
+                <div class="card-heading">
+                    <div>
+                        <span class="eyebrow">02 / POLICY PROCESSING</span>
+                        <h3>Policy extraction</h3>
+                        <p>
+                            Extract the privacy policy text before starting AI analysis.
+                        </p>
+                    </div>
+
+                    <div class="step-number">01</div>
+                </div>
+
+                <button id="extractBtn" class="primary-button" disabled>
+                    <span>↓</span> Extract Policy Text
+                </button>
+
+
+                <div id="extractedSection" class="extracted-section hidden">
+
+                    <div class="extracted-heading">
+                        <div>
+                            <span class="success-indicator"></span>
+                            <strong>Policy text ready</strong>
+                        </div>
+
+                        <span class="extracted-tag">EXTRACTED</span>
+                    </div>
+
+                    <p id="extractedLength" class="extracted-length"></p>
+
+                    <pre id="extractedText"></pre>
+
+                    <button id="runAnalysisBtn" class="primary-button analysis-button">
+                        ✦ Analyse with PrivacyLens AI
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- NUTRITION LABEL -->
+        <section id="nutritionLabel" class="dashboard-section nutrition-section hidden">
+
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">03 / PRIVACY INSIGHTS</span>
+                    <h2>Privacy Nutrition Label</h2>
+                    <p>A structured overview of practices described in the policy.</p>
+                </div>
+
+                <span class="status-badge completed">
+                    <span class="badge-dot"></span>
+                    Analysed
+                </span>
+            </div>
+
+
+            <div class="nutrition-header-card">
+
+                <div>
+                    <span class="card-label">WEBSITE ANALYSED</span>
+                    <h3 id="labelWebsiteName">Website</h3>
+                    <p id="policyUpdated">Policy update date not identified.</p>
+                </div>
+
+                <div class="nutrition-shield">🛡</div>
+
+            </div>
+
+
+            <div class="overview-card">
+
+                <div class="card-heading">
+                    <div>
+                        <span class="eyebrow">POLICY BREAKDOWN</span>
+                        <h3>What you should know</h3>
+                        <p class="overview-subtitle">
+                            Important practices mentioned in this privacy policy.
+                        </p>
+                    </div>
+                </div>
+
+                <div id="nutritionItems" class="nutrition-items">
+                    No information available yet.
+                </div>
+
+            </div>
+
+
+            <div class="overview-card">
+
+                <div class="card-heading">
+                    <div>
+                        <span class="eyebrow">ATTENTION AREAS</span>
+                        <h3>Important things to consider</h3>
+                        <p class="overview-subtitle">
+                            Privacy topics worth reviewing before proceeding.
+                        </p>
+                    </div>
+                </div>
+
+                <div id="importantConsiderations"></div>
+
+            </div>
+
+
+            <!-- DECISION -->
+            <div class="decision-card">
+
+                <div class="decision-content">
+                    <span class="eyebrow">YOUR NEXT STEP</span>
+                    <h3>Your decision. Your control.</h3>
+
+                    <p>
+                        Review the available information and decide how you
+                        want to proceed. PrivacyLens will not make this
+                        decision for you.
+                    </p>
+                </div>
+
+                <div class="decision-actions">
+
+                    <button id="continueBtn" class="primary-button">
+                        Continue to website →
+                    </button>
+
+                    <button id="reviewDetailsBtn" class="secondary-button">
+                        Explore detailed analysis
+                    </button>
+
+                    <button id="goBackBtn" class="back-button">
+                        ← Go back
+                    </button>
+
+                </div>
+
+                <p class="decision-note">
+                    Continuing does not automatically mean you have accepted
+                    the website's terms or consented to its data practices.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- DETAILED ANALYSIS -->
+        <section id="results" class="dashboard-section results hidden">
+
+            <div class="section-heading">
+                <div>
+                    <span class="eyebrow">04 / AI-POWERED ANALYSIS</span>
+                    <h2>Detailed privacy analysis</h2>
+                    <p>Explore detected practices and the evidence behind them.</p>
+                </div>
+            </div>
+
+
+            <!-- SUMMARY -->
+            <div class="analysis-card">
+
+                <div class="analysis-card-heading">
+                    <div class="analysis-icon summary-icon">✦</div>
+                    <div>
+                        <h3>Policy summary</h3>
+                        <p>Plain-language overview</p>
+                    </div>
+                </div>
+
+                <div id="summaryContent">
+                    No summary available yet.
+                </div>
+
+            </div>
+
+
+            <!-- OPP-115 FINDINGS -->
+            <div class="analysis-card" id="evidence-section">
+
+                <div class="analysis-card-heading">
+                    <div class="analysis-icon findings-icon">⌕</div>
+                    <div>
+                        <h3>Privacy findings</h3>
+                        <p>OPP-115 classification results</p>
+                    </div>
+                </div>
+
+                <div id="findingsContent">
+                    No findings available yet.
+                </div>
+
+            </div>
+
+
+            <!-- DPDP CHECKLIST -->
+            <div class="analysis-card" id="dpdp-section">
+
+                <div class="analysis-card-heading">
+                    <div class="analysis-icon dpdp-icon">✓</div>
+                    <div>
+                        <h3>DPDP awareness checklist</h3>
+                        <p>Informational policy evidence mapping</p>
+                    </div>
+                </div>
+
+                <div id="checklistContent">
+                    No checklist available yet.
+                </div>
+
+            </div>
+
+
+            <div class="disclaimer-card">
+                <span>ⓘ</span>
+                <p>
+                    These results are automated policy-text analysis.
+                    They do not verify actual website behaviour or establish
+                    legal compliance. The checklist is informational and
+                    is not legal advice.
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer class="workspace-footer">
+
+            <div>
+                <strong>PrivacyLens India</strong>
+                <span>AI-assisted privacy awareness</span>
+            </div>
+
+            <span>Built for informed digital decisions.</span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<script src="welcome.js"></script>
+
+</body>
+</html>

@@ -36,7 +36,15 @@ CHECKLIST = [
             "this privacy statement outlines",
             "this privacy statement describes",
             "this privacy statement explains",
-
+            "this privacy and cookies policy explains",
+            "this privacy and cookies policy describes",
+            "this policy explains how we collect",
+            "this policy describes how we collect",
+            "this policy sets out how we process",
+            "this policy explains what personal data",
+            "personal data we process and the purposes",
+            "categories of information collected",
+            "how your personal information is collected and used",
             # Specific notice language identified in the Eternal/Zomato policy
             "types of information that eternal may collect from you",
             "practices for collecting, using, maintaining, protecting and disclosing",
@@ -317,12 +325,29 @@ CHECKLIST = [
             "personal data of children",
             "child's personal data",
             "personal information of children",
+            "personal data relating to children",
+            "personal data concerning children",
+
+            # Parental / guardian consent
             "parental consent",
             "consent of a parent",
             "verifiable consent of a parent",
-            "legal guardian",
+            "parental or guardian consent",
+            "consent of a parent or guardian",
+            "parent or guardian consent",
+            "parental or legal guardian consent",
+
+            # Age-related processing
             "under the age of 18",
             "under 18 years of age",
+            "below the age of 18",
+            "below a relevant age threshold",
+            "child below a relevant age threshold",
+
+            # Online services involving children
+            "online services to children",
+            "providing online services to children",
+            "where we are providing online services to children",
         ],
     },
 ]
