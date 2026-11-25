@@ -63,11 +63,13 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
         (async () => {
 
-            const originTabId = sender.tab?.id;
+            const originTabId = message.originTabId ?? sender.tab?.id;
 
             if (originTabId === undefined || !message.policy?.url) {
                 throw new Error("Missing website or policy information.");
             }
+
+            const originTab = await chrome.tabs.get(originTabId);
 
             const policyURL = new URL(message.policy.url);
 
@@ -85,7 +87,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             await chrome.storage.local.set({
                 [`privacyLensWelcome_${welcomeTab.id}`]: {
                     policy: message.policy,
-                    pageUrl: message.pageUrl || sender.tab.url,
+                    pageUrl: message.pageUrl || originTab.url,
                     originTabId,
                     createdAt: Date.now()
                 }

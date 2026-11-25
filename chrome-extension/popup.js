@@ -212,6 +212,7 @@ detectBtn.addEventListener("click", async () => {
 // Open policy in a new tab and remember the original website
 
 
+
 analyzeBtn.addEventListener("click", async () => {
 
     if (!detectedPolicy?.url) {
@@ -226,20 +227,23 @@ analyzeBtn.addEventListener("click", async () => {
             throw new Error("Original website tab unavailable.");
         }
 
-        updateStatus("Opening privacy policy...", "#f59e0b");
+        updateStatus("Opening PrivacyLens workspace...", "#f59e0b");
 
         const response = await chrome.runtime.sendMessage({
-            type: "OPEN_POLICY_TAB",
-            policyUrl: detectedPolicy.url,
+            type: "LAUNCH_WELCOME_PAGE",
+            policy: detectedPolicy,
+            pageUrl: originalTab.url,
             originTabId: originalTab.id
         });
 
         if (!response?.success) {
-            throw new Error(response?.error || "Could not open policy.");
+            throw new Error(
+                response?.error || "Could not open PrivacyLens workspace."
+            );
         }
 
     } catch (error) {
-        console.error(error);
+        console.error("Workspace launch error:", error);
         updateStatus(error.message, "#ef4444");
     }
 });
@@ -626,12 +630,17 @@ function highlightEvidence(excerpt) {
 
 
 // Initialize popup
+
+// Initialize popup and automatically scan the active website
 async function initializePopup() {
     await loadWebsiteInfo();
-    await loadSavedDetection();
+
+    // Perform a fresh privacy policy detection
+    detectBtn.click();
 }
 
 initializePopup();
+
 
 
 // Send extracted policy text to FastAPI backend
