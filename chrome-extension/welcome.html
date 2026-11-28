@@ -266,6 +266,146 @@
 
 
             <!-- DECISION -->
+            
+<!-- PRIVACY CONCERNS -->
+<div class="overview-card concerns-card">
+
+    <div class="card-heading">
+        <div>
+            <span class="eyebrow">YOUR PRIVACY PREFERENCES</span>
+            <h3>What concerns you?</h3>
+            <p class="overview-subtitle">
+                Select the privacy practices you would like to raise concerns about.
+            </p>
+        </div>
+    </div>
+
+    <div class="concern-grid">
+
+        <label class="concern-option">
+            <input type="checkbox" value="Personal data collection">
+            <span class="concern-check"></span>
+            <span>Personal data collection</span>
+        </label>
+
+        <label class="concern-option">
+            <input type="checkbox" value="Third-party data sharing">
+            <span class="concern-check"></span>
+            <span>Third-party data sharing</span>
+        </label>
+
+        <label class="concern-option">
+            <input type="checkbox" value="Data retention">
+            <span class="concern-check"></span>
+            <span>Data retention</span>
+        </label>
+
+        <label class="concern-option">
+            <input type="checkbox" value="Tracking and cookies">
+            <span class="concern-check"></span>
+            <span>Tracking and cookies</span>
+        </label>
+
+        <label class="concern-option">
+            <input type="checkbox" value="Children's personal data">
+            <span class="concern-check"></span>
+            <span>Children's personal data</span>
+        </label>
+
+        <label class="concern-option">
+            <input type="checkbox" value="International data transfers">
+            <span class="concern-check"></span>
+            <span>International data transfers</span>
+        </label>
+
+        <label class="concern-option">
+            <input type="checkbox" value="Access and deletion rights">
+            <span class="concern-check"></span>
+            <span>Access and deletion rights</span>
+        </label>
+
+        <label class="concern-option">
+            <input type="checkbox" value="Profiling and automated decisions">
+            <span class="concern-check"></span>
+            <span>Profiling and automated decisions</span>
+        </label>
+
+    </div>
+
+    <p class="concern-note">
+        Your selections will eventually be used to prepare a personalised privacy grievance.
+    </p>
+
+</div>
+
+
+
+<!-- GRIEVANCE EMAIL COMPOSER -->
+
+<div class="grievance-preview hidden" id="grievancePreview">
+
+    <div class="grievance-preview-header">
+        <div>
+            <span class="eyebrow">PRIVACY COMMUNICATION</span>
+            <h3>Review your privacy concern email</h3>
+        </div>
+
+        <span class="coming-soon-badge">AI GENERATED DRAFT</span>
+    </div>
+
+    <p id="emailDraftStatus" class="concern-note">
+        Your email draft will appear here.
+    </p>
+
+    <div class="email-preview-field">
+        <label for="grievanceRecipient">RECIPIENT</label>
+        <input
+            type="email"
+            id="grievanceRecipient"
+            placeholder="Enter grievance email address"
+        >
+        <small id="grievanceContactStatus">
+            If no designated contact is identified, enter an address manually.
+        </small>
+    </div>
+
+    <div class="email-preview-field">
+        <label for="emailSubject">SUBJECT</label>
+        <input
+            type="text"
+            id="emailSubject"
+            value="Privacy concerns regarding your data practices"
+        >
+    </div>
+
+    <div class="email-preview-field">
+        <label for="emailMessage">MESSAGE</label>
+        <textarea
+            id="emailMessage"
+            rows="12"
+            placeholder="Your personalised privacy concern email will appear here..."
+        ></textarea>
+    </div>
+
+    <button
+        id="openGmailBtn"
+        class="primary-button"
+        type="button"
+        disabled
+    >
+        ✉ Review and open in Gmail
+    </button>
+
+    <p class="concern-note">
+        PrivacyLens will not send this email automatically.
+        You can review and edit it before sending through Gmail.
+    </p>
+
+</div>
+
+
+
+            <!-- DECISION -->
             <div class="decision-card">
 
                 <div class="decision-content">
@@ -289,6 +429,10 @@
                         Explore detailed analysis
                     </button>
 
+                    <button id="concernEmailBtn" class="concern-button" type="button">
+                        ✉ Raise a Privacy Concern
+                    </button>
+
                     <button id="goBackBtn" class="back-button">
                         ← Go back
                     </button>
@@ -302,7 +446,6 @@
 
             </div>
 
-        </section>
 
 
         <!-- DETAILED ANALYSIS -->

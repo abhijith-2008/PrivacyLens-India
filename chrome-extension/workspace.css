@@ -1554,3 +1554,219 @@ body {
 .workspace-footer span {
     font-size: 12px;
 }
+
+/* =========================================
+   PRIVACY CONCERNS — NEW UI
+   ========================================= */
+
+.concerns-card {
+    margin-top: 22px;
+}
+
+.concern-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.concern-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    padding: 15px;
+
+    background: rgba(8, 16, 31, .55);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+
+    color: var(--text);
+    font-size: 14px;
+
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.concern-option:hover {
+    background: rgba(56, 189, 248, .07);
+    border-color: var(--border-bright);
+}
+
+.concern-option input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.concern-check {
+    width: 19px;
+    height: 19px;
+    flex-shrink: 0;
+
+    border: 1px solid #607994;
+    border-radius: 5px;
+
+    display: grid;
+    place-items: center;
+}
+
+.concern-option input:checked + .concern-check {
+    background: #0284c7;
+    border-color: #38bdf8;
+}
+
+.concern-option input:checked + .concern-check::after {
+    content: "✓";
+    color: white;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.concern-option:has(input:checked) {
+    background: rgba(14, 165, 233, .09);
+    border-color: rgba(56, 189, 248, .4);
+}
+
+.concern-option input:focus-visible + .concern-check {
+    outline: 2px solid var(--cyan);
+    outline-offset: 3px;
+}
+
+.concern-note {
+    margin-top: 18px;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+/* =========================================
+   GRIEVANCE EMAIL PREVIEW
+   ========================================= */
+
+.grievance-preview {
+    padding: 25px;
+    margin-bottom: 22px;
+
+    background: linear-gradient(
+        145deg,
+        rgba(20, 35, 59, .98),
+        rgba(14, 25, 44, .98)
+    );
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.grievance-preview-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+
+    margin-bottom: 22px;
+}
+
+.grievance-preview-header h3 {
+    color: var(--white);
+    font-size: 20px;
+}
+
+.coming-soon-badge {
+    flex-shrink: 0;
+
+    padding: 7px 11px;
+
+    border-radius: 20px;
+    border: 1px solid rgba(251, 191, 36, .25);
+
+    color: #fcd477;
+    background: rgba(245, 158, 11, .09);
+
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .8px;
+}
+
+.email-preview-field {
+    padding: 15px;
+    margin-top: 11px;
+
+    background: rgba(8, 16, 31, .65);
+    border: 1px solid rgba(148, 163, 184, .13);
+    border-radius: 10px;
+}
+
+.email-preview-field span {
+    display: block;
+    margin-bottom: 8px;
+
+    color: var(--cyan);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.2px;
+}
+
+.email-preview-field p {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+
+/* =========================================
+   RAISE A PRIVACY CONCERN BUTTON
+   ========================================= */
+
+.concern-button {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+
+    padding: 17px 20px;
+
+    color: #f0abfc;
+
+    background: linear-gradient(
+        110deg,
+        rgba(126, 34, 206, .22),
+        rgba(79, 70, 229, .18)
+    );
+
+    border: 1px solid rgba(192, 132, 252, .4);
+    border-radius: 11px;
+
+    font-size: 15px;
+    font-weight: 750;
+
+    cursor: pointer;
+    transition: .22s ease;
+}
+
+.concern-button:hover {
+    background: rgba(126, 34, 206, .3);
+    border-color: #c084fc;
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   RESPONSIVE CONCERNS
+   ========================================= */
+
+@media (max-width: 720px) {
+
+    .concern-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .grievance-preview-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+}

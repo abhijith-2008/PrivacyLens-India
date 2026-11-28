@@ -14,8 +14,11 @@ from pydantic import BaseModel, Field
 from analyzer import PrivacyPolicyAnalyzer
 from report import build_report
 from dpdp_checklist import build_dpdp_checklist
-
-
+from llm_analyzer import (
+    analyze_privacy_policy,
+    analyze_dpdp_checklist,
+    generate_privacy_concern_email,
+)
 app = FastAPI(
     title="PrivacyLens India API",
     description=(
@@ -43,6 +46,8 @@ class AnalysisRequest(BaseModel):
         max_length=200_000,
         description="Privacy policy text to analyse.",
     )
+class EmailDraftRequest(BaseModel):
+    context: dict
 
 
 @lru_cache(maxsize=1)
@@ -131,4 +136,89 @@ def analyze_policy(request: AnalysisRequest):
         raise HTTPException(
             status_code=500,
             detail="Analysis failed. Please try again.",
+        ) from exc
+
+# ==========================================
+# LOCAL QWEN PRIVACY ANALYSIS
+# ==========================================
+
+@app.post("/analyze-privacy-details")
+def analyze_privacy_details(request: AnalysisRequest):
+    """
+    Run local Qwen privacy analysis and DPDP issue spotting.
+    """
+
+    try:
+        # First: Analyse the eight privacy areas.
+        result = analyze_privacy_policy(
+            request.policy_text
+        )
+
+        # Second: Analyse the six DPDP checklist areas.
+        dpdp_results = analyze_dpdp_checklist(
+            request.policy_text
+        )
+
+        return {
+            "product": "PrivacyLens India",
+            "status": "success",
+            "privacy_details": result,
+            "dpdp_checklist": dpdp_results,
+        }
+
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=422,
+            detail=str(exc),
+        ) from exc
+
+    except RuntimeError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail=str(exc),
+        ) from exc
+
+    except Exception as exc:
+        print(f"Qwen analysis error: {exc}")
+
+        raise HTTPException(
+            status_code=500,
+            detail="Local AI analysis failed. Please try again.",
+        ) from exc
+# ==========================================
+# PRIVACY CONCERN EMAIL GENERATION
+# ==========================================
+
+@app.post("/generate-privacy-email")
+def generate_privacy_email(request: EmailDraftRequest):
+
+    try:
+        draft = generate_privacy_concern_email(
+            request.context
+        )
+
+        return {
+            "product": "PrivacyLens India",
+            "status": "success",
+            "email_draft": draft,
+        }
+
+    except ValueError as exc:
+        raise HTTPException(
+            status_code=422,
+            detail=str(exc)
+        ) from exc
+
+    except RuntimeError as exc:
+        raise HTTPException(
+            status_code=503,
+            detail=str(exc)
+        ) from exc
+
+    except Exception as exc:
+        print(f"Privacy email generation error: {exc}")
+
+        raise HTTPException(
+            status_code=500,
+            detail="Unable to generate privacy concern email."
         ) from exc

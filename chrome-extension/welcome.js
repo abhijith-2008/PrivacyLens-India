@@ -39,6 +39,30 @@ const continueBtn = document.getElementById("continueBtn");
 const reviewDetailsBtn = document.getElementById("reviewDetailsBtn");
 const goBackBtn = document.getElementById("goBackBtn");
 
+// Privacy concern selection
+const concernCheckboxes = document.querySelectorAll(
+    '.concern-option input[type="checkbox"]'
+);
+// ==========================================
+// PRIVACY EMAIL COMPOSER ELEMENTS
+// ==========================================
+
+const concernEmailBtn = document.getElementById("concernEmailBtn");
+
+const grievancePreview = document.getElementById("grievancePreview");
+
+const emailDraftStatus = document.getElementById("emailDraftStatus");
+
+const grievanceRecipient = document.getElementById("grievanceRecipient");
+
+const grievanceContactStatus = document.getElementById("grievanceContactStatus");
+
+const emailSubject = document.getElementById("emailSubject");
+
+const emailMessage = document.getElementById("emailMessage");
+
+const openGmailBtn = document.getElementById("openGmailBtn");
+
 
 // ==========================================
 // WORKSPACE STATE
@@ -50,6 +74,80 @@ let originTabId = null;
 let policyTabId = null;
 
 let currentPolicyText = "";
+// ==========================================
+// PRIVACY CONCERN INTEGRATION STATE
+// ==========================================
+
+let latestAnalysisData = null;
+let latestQwenData = null;
+let privacyConcernContext = null;
+
+// Map user concerns to existing OPP-115 categories.
+
+
+
+
+// Match selected concerns with available analysis evidence.
+
+// ==========================================
+// GET SELECTED PRIVACY CONCERNS
+// ==========================================
+
+function getSelectedPrivacyConcerns() {
+
+    return Array.from(concernCheckboxes)
+        .filter(checkbox => checkbox.checked)
+        .map(checkbox => checkbox.value);
+
+}
+// ==========================================
+// QWEN PRIVACY CONCERN MAPPING
+// ==========================================
+
+function preparePrivacyConcernContext() {
+
+    const selectedConcerns = getSelectedPrivacyConcerns();
+
+    const qwenFindings =
+        latestQwenData?.findings || [];
+
+    const matchedConcerns = selectedConcerns.map(concern => {
+
+        const finding = qwenFindings.find(
+            item => item.area === concern
+        );
+
+        return {
+            concern: concern,
+
+            status: finding?.status || "not_identified",
+
+            explanation: finding?.explanation || "",
+
+            evidence: finding?.evidence || []
+
+        };
+
+    });
+
+    privacyConcernContext = {
+
+        website: websiteName.textContent,
+
+        policyUrl: detectedData?.policy?.url || "",
+
+        selectedConcerns: selectedConcerns,
+
+        matchedConcerns: matchedConcerns,
+
+        grievanceContact:
+            latestQwenData?.grievance_contact || null
+
+    };
+
+    return privacyConcernContext;
+
+}
 
 
 // ==========================================
@@ -642,6 +740,8 @@ runAnalysisBtn.addEventListener("click", async () => {
         );
 
         const data = await response.json();
+        // Save analysis results for future privacy concern integration.
+        latestAnalysisData = data;
 
         if (!response.ok) {
 
@@ -740,46 +840,191 @@ runAnalysisBtn.addEventListener("click", async () => {
 
         // DPDP AWARENESS CHECKLIST
 
+        // DPDP CHECKLIST — WAITING FOR QWEN
+
         checklistContent.replaceChildren();
 
-        (data.dpdp_checklist || []).forEach(item => {
+        checklistContent.textContent =
+            "Generating AI-powered DPDP awareness checklist...";
+
+
+        
+// ==========================================
+// NUTRITION LABEL
+// ==========================================
+
+renderNutritionLabel(data);
+
+
+// ==========================================
+// LOCAL QWEN ANALYSIS
+// ==========================================
+
+latestQwenData = null;
+
+updateStatus(
+    "Running detailed local AI privacy analysis...",
+    "#f59e0b"
+);
+
+try {
+
+    const qwenResponse = await fetch(
+        "http://127.0.0.1:8000/analyze-privacy-details",
+        {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+
+            body: JSON.stringify({
+                policy_text: currentPolicyText
+            })
+        }
+    );
+
+    const qwenResult = await qwenResponse.json();
+
+    if (!qwenResponse.ok) {
+
+        throw new Error(
+            qwenResult.detail || "Qwen analysis failed."
+        );
+
+    }
+
+    latestQwenData = qwenResult.privacy_details;
+
+    console.log(
+        "PrivacyLens Qwen results:",
+        latestQwenData
+    );
+        // ==========================================
+    // QWEN-POWERED DPDP AWARENESS CHECKLIST
+    // ==========================================
+
+    checklistContent.replaceChildren();
+
+    const dpdpChecklist = qwenResult.dpdp_checklist || [];
+
+    if (dpdpChecklist.length === 0) {
+
+        checklistContent.textContent =
+            "No DPDP checklist results available.";
+
+    } else {
+
+        dpdpChecklist.forEach(item => {
 
             const card = document.createElement("div");
 
-            card.style.marginBottom = "12px";
+            card.style.marginBottom = "16px";
+            card.className = "dpdp-checklist-card";
 
+            // Title
             const title = document.createElement("strong");
 
             title.textContent = item.title;
 
+            // Status
             const status = document.createElement("p");
 
-            status.textContent = `Status: ${item.status}`;
+            status.textContent =
+                `Status: ${item.status.replaceAll("_", " ")}`;
 
+            // Explanation
             const explanation = document.createElement("p");
 
-            explanation.textContent = item.explanation;
+            explanation.textContent =
+                item.explanation || "No explanation provided.";
 
-            card.append(title, status, explanation);
+            // Legal reference
+            const reference = document.createElement("p");
 
-            (item.evidence || []).forEach(text => {
+            reference.textContent =
+                `Reference: ${item.reference}`;
 
-                const evidence = document.createElement("p");
+            // Why it matters
+            const why = document.createElement("p");
 
-                evidence.textContent = `Evidence: ${text}`;
+            why.textContent =
+                item.why_it_matters || "";
 
-                card.appendChild(evidence);
+            card.append(
+                title,
+                status,
+                explanation,
+                reference,
+                why
+            );
+
+            // Evidence
+            (item.evidence || []).forEach(excerpt => {
+
+                const evidenceButton =
+                    document.createElement("button");
+
+                evidenceButton.type = "button";
+                evidenceButton.className = "evidence-link";
+
+                evidenceButton.textContent =
+                    `🔎 View evidence: ${excerpt}`;
+
+                evidenceButton.addEventListener("click", () => {
+
+                    highlightEvidence(excerpt);
+
+                });
+
+                card.appendChild(evidenceButton);
 
             });
+
+            // Manual review disclaimer
+            if (item.manual_review_required) {
+
+                const review = document.createElement("p");
+
+                review.textContent =
+                    "⚠ Manual review required. This is an informational finding, not a legal compliance verdict.";
+
+                review.style.color = "#f59e0b";
+                review.style.fontSize = "12px";
+
+                card.appendChild(review);
+
+            }
 
             checklistContent.appendChild(card);
 
         });
 
+    }
 
-        // NUTRITION LABEL
+    // Prepare selected concerns using Qwen evidence.
+    preparePrivacyConcernContext();
 
-        renderNutritionLabel(data);
+    updateStatus(
+        "OPP-115 and Qwen analysis completed!"
+    );
+
+} catch (qwenError) {
+
+    console.error(
+        "Qwen analysis error:",
+        qwenError
+    );
+
+    updateStatus(
+        "OPP-115 analysis completed, but Qwen analysis failed: " +
+        qwenError.message,
+        "#f59e0b"
+    );
+
+}
+
 
         // Keep detailed analysis as a secondary view.
         results.classList.add("hidden");
@@ -898,6 +1143,241 @@ goBackBtn.addEventListener("click", async () => {
 
 });
 
+
+// ==========================================
+// GENERATE PRIVACY CONCERN EMAIL
+// ==========================================
+
+concernEmailBtn.addEventListener("click", async () => {
+
+    if (!currentPolicyText || !latestQwenData) {
+
+        updateStatus(
+            "Please extract and analyse the policy first.",
+            "#ef4444"
+        );
+
+        return;
+    }
+
+    const selectedConcerns = getSelectedPrivacyConcerns();
+
+    if (selectedConcerns.length === 0) {
+
+        updateStatus(
+            "Please select at least one privacy concern.",
+            "#ef4444"
+        );
+
+        return;
+    }
+
+    // Refresh context using the latest checkbox selections.
+    const context = preparePrivacyConcernContext();
+
+    concernEmailBtn.disabled = true;
+    concernEmailBtn.textContent = "Generating email...";
+
+    emailDraftStatus.textContent =
+        "Qwen is preparing your privacy concern email. This may take a few minutes.";
+
+    grievancePreview.classList.remove("hidden");
+
+    grievancePreview.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+
+    openGmailBtn.disabled = true;
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:8000/generate-privacy-email",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+
+                body: JSON.stringify({
+                    context: context
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.detail || "Email generation failed."
+            );
+        }
+
+        const draft = data.email_draft;
+
+        if (!draft?.subject || !draft?.body) {
+            throw new Error("Incomplete email draft received.");
+        }
+
+        // Populate the editable email fields.
+        emailSubject.value = draft.subject;
+        emailMessage.value = draft.body;
+
+        // Use only the contact already validated by the backend.
+        const contact = latestQwenData.grievance_contact;
+
+        if (
+            contact?.status === "identified" &&
+            contact?.email
+        ) {
+
+            grievanceRecipient.value = contact.email;
+
+            grievanceContactStatus.textContent =
+                `Policy identifies ${contact.designation || "a designated privacy contact"}. Please verify the address before sending.`;
+
+        } else {
+
+            grievanceRecipient.value = "";
+
+            grievanceContactStatus.textContent =
+                "No designated grievance email was identified in the policy. Please enter the recipient manually.";
+
+        }
+
+        emailDraftStatus.textContent =
+            "Your email draft is ready. Review and edit it before opening Gmail.";
+
+        updateStatus("Privacy concern email generated successfully!");
+
+        openGmailBtn.disabled = !isValidRecipient(
+            grievanceRecipient.value
+        );
+
+    } catch (error) {
+
+        console.error("Email generation error:", error);
+
+        emailDraftStatus.textContent =
+            "Unable to generate the email: " + error.message;
+
+        updateStatus(
+            "Email generation failed: " + error.message,
+            "#ef4444"
+        );
+
+    } finally {
+
+        concernEmailBtn.disabled = false;
+        concernEmailBtn.textContent = "✉ Raise a Privacy Concern";
+
+    }
+
+});
+
+
+// ==========================================
+// RECIPIENT VALIDATION
+// ==========================================
+
+function isValidRecipient(email) {
+
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
+        email.trim()
+    );
+
+}
+
+grievanceRecipient.addEventListener("input", () => {
+
+    openGmailBtn.disabled =
+        !emailSubject.value.trim() ||
+        !emailMessage.value.trim() ||
+        !isValidRecipient(grievanceRecipient.value);
+
+});
+
+emailSubject.addEventListener("input", () => {
+
+    openGmailBtn.disabled =
+        !emailSubject.value.trim() ||
+        !emailMessage.value.trim() ||
+        !isValidRecipient(grievanceRecipient.value);
+
+});
+
+emailMessage.addEventListener("input", () => {
+
+    openGmailBtn.disabled =
+        !emailSubject.value.trim() ||
+        !emailMessage.value.trim() ||
+        !isValidRecipient(grievanceRecipient.value);
+
+});
+
+
+// ==========================================
+// OPEN PREFILLED GMAIL COMPOSE
+// ==========================================
+
+openGmailBtn.addEventListener("click", async () => {
+
+    const recipient = grievanceRecipient.value.trim();
+    const subject = emailSubject.value.trim();
+    const message = emailMessage.value.trim();
+
+    if (!isValidRecipient(recipient)) {
+
+        updateStatus(
+            "Please enter a valid recipient email address.",
+            "#ef4444"
+        );
+
+        return;
+    }
+
+    if (!subject || !message) {
+
+        updateStatus(
+            "Please complete the email subject and message.",
+            "#ef4444"
+        );
+
+        return;
+    }
+
+    const gmailUrl =
+        "https://mail.google.com/mail/?view=cm&fs=1" +
+        "&to=" + encodeURIComponent(recipient) +
+        "&su=" + encodeURIComponent(subject) +
+        "&body=" + encodeURIComponent(message);
+
+    try {
+
+        await chrome.tabs.create({
+            url: gmailUrl,
+            active: true
+        });
+
+        updateStatus(
+            "Gmail opened. Review your email before sending."
+        );
+
+    } catch (error) {
+
+        console.error("Gmail opening error:", error);
+
+        updateStatus(
+            "Unable to open Gmail: " + error.message,
+            "#ef4444"
+        );
+
+    }
+
+});
 
 // ==========================================
 // START WORKSPACE
